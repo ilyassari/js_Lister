@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>Lister</title>
+  </head>
+  <body>
+    <h1>Personel list</h1>
+    <hr>
+
+    <div class="container">
+
+      <div id="form_container" class="container">
+        <form id="new_personel" class="row g-3">
+          <div class="col-md-6">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="first_name" required>
+          </div>
+          <div class="col-md-6">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="last_name" required>
+          </div>
+          <div class="col-md-6">
+            <label for="department" class="form-label">Department</label>
+            <select class="form-select" id="department" required>
+              <option selected disabled value="">Choose...</option>
+              <option> Management </option>
+              <option> Manufacturing </option>
+              <option> Marketing </option>
+              <option> Finance </option>
+              <option> Accounting </option>
+              <option> Human Resource </option>
+              <option> Research and Devolopment </option>
+              <option> Public Relations </option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label">E-mail</label>
+            <div class="input-group mt-1 mb-2">
+              <input type="text" class="form-control" placeholder="email" id="email">
+              <span class="input-group-text" id="basic-addon2">@companyname.com</span>
+            </div>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Add List</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="list_container" class="container mt-5">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Department</th>
+              <th scope="col">email</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody id="personel_list">
+
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="app.js" charset="utf-8"></script>
+
+  </body>
+</html>
