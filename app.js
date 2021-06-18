@@ -1,7 +1,7 @@
 
-class Personel {
+class Personnel {
   constructor(first_name, last_name, department, email) {
-    this.id = '0000'
+    this.id = Math.floor(Math.random()*10000);
     this.first_name = first_name;
     this.last_name = last_name;
     this.department = department;
@@ -10,21 +10,21 @@ class Personel {
 }
 
 class UI {
-  addToList(personel) {
-    const list = document.getElementById('personel_list');
+  addToList(personnel) {
+    const list = document.getElementById('personnel_list');
 
     var html = `
       <tr>
-        <td>${personel.id}</td>
-        <td>${personel.first_name}</td>
-        <td>${personel.last_name}</td>
-        <td>${personel.department}</td>
-        <td>${personel.email}</td>
+        <td>${personnel.id}</td>
+        <td>${personnel.first_name}</td>
+        <td>${personnel.last_name}</td>
+        <td>${personnel.department}</td>
+        <td>${personnel.email}</td>
         <td>
-          <a href="#" class="btn btn-secondary btn-sm edit">
+          <a href="#" data-id="${personnel.id}" class="btn btn-secondary btn-sm edit">
             Edit
           </a>
-          <a href="#" class="btn btn-danger btn-sm delete">
+          <a href="#" data-id="${personnel.id}" class="btn btn-danger btn-sm delete">
             Delete
           </a>
         </td>
@@ -68,17 +68,66 @@ class UI {
   }
 }
 
+class Storage {
+
+  static getPersonnel() {
+    let personnel;
+
+    if(localStorage.getItem('personnel')===null){
+        personnel=[];
+    }else{
+        personnel = JSON.parse(localStorage.getItem('personnel'));
+    }
+    return personnel;
+  }
+
+  static displayPersonnel() {
+    const personnel = Storage.getPersonnel();
+
+    personnel.forEach(course => {
+        const ui = new UI();
+        ui.addToList(personnel);
+    });
+  }
+
+  static addPersonnel(p) {
+    const personnel = Storage.getPersonnel();
+    personnel.push(p);
+    localStorage.setItem('personnel',JSON.stringify(personnel));
+  }
+
+  static deletePersonnel(element) {
+    if(element.classList.contains('delete')){
+        const id = element.getAttribute('data-id');
+
+        const personnel = Storage.getPersonnel();
+
+        personnel.forEach((p,index)=>{
+            if(p.id == id){
+                personnel.splice(index,1);
+            }
+        });
+
+        localStorage.setItem('personnel',JSON.stringify(personnel));
+    }
+  }
 
 
-document.getElementById('new_personel').addEventListener('submit',
+}
+
+// When page is loaded show personnel list in local storage
+document.addEventListener('DOMContentLoaded',Storage.displayPersonnel);
+
+
+document.getElementById('new_personnel').addEventListener('submit',
 function(e){
     const first_name = document.getElementById('first_name').value;
     const last_name = document.getElementById('last_name').value;
     const department = document.getElementById('department').value;
     const email = document.getElementById('email').value;
 
-    // create new_personel
-    const personel = new Personel(first_name, last_name, department, email);
+    // create new_personnel
+    const personnel = new Personnel(first_name, last_name, department, email);
 
     // create ui
     const ui = new UI();
@@ -87,14 +136,31 @@ function(e){
         ui.showAlert('Please complete the form','warning');
     }else{
         // add to list
-        ui.addToList(personel);
+        ui.addToList(personnel);
+        // add to Local Storage
+        Storage.addPersonnel(personnel);
 
         // clear form
         ui.clearForm();
 
-        ui.showAlert('New personel has been added','success');
+        ui.showAlert('New personnel has been added','success');
     }
 
 
     e.preventDefault();
+});
+
+
+document.getElementById('personnel_list').addEventListener('click',function(e){
+
+    // create ui
+    const ui = new UI();
+
+    // delete course
+    if(ui.deleteElement(e.target)==true){
+        // delete from LS
+        Storage.deletePersonnel(e.target);
+
+        ui.showAlert('Personnel has been deleted','danger');
+    }
 });
