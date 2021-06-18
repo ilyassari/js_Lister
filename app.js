@@ -41,9 +41,7 @@ class UI {
 
   }
   editElement(element) {
-    if(element.classList.contains('edit')){
-
-    }
+    // inline edif form wolud be bigger issue than all project
   }
   deleteElement(element) {
     if(element.classList.contains('delete')){
@@ -112,12 +110,10 @@ class Storage {
     }
   }
 
-
 }
 
 // When page is loaded show personnel list in local storage
 document.addEventListener('DOMContentLoaded',Storage.displayPersonnel);
-
 
 document.getElementById('new_personnel').addEventListener('submit',
 function(e){
@@ -150,7 +146,6 @@ function(e){
     e.preventDefault();
 });
 
-
 document.getElementById('personnel_list').addEventListener('click',function(e){
 
     // create ui
@@ -163,4 +158,13 @@ document.getElementById('personnel_list').addEventListener('click',function(e){
 
         ui.showAlert('Personnel has been deleted','danger');
     }
+});
+
+document.getElementById('personnel_list').addEventListener('click',function(e){
+    // inline edit form wolud be bigger issue than all project
+    // create ui
+    const ui = new UI();
+
+    ui.showAlert("This function won't be added",'warning');
+
 });
